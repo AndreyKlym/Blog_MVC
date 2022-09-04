@@ -52,3 +52,4 @@ $controller = new $controllerName();
 // $controller->$actionName($userName);
 $controller->$actionName(...$matches);
 
+// var_dump(\MyProject\Services\Db::getInstancesCount());

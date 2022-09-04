@@ -4,7 +4,7 @@ namespace MyProject\Models\Users;
 
 use MyProject\Models\ActiveRecordEntity;
 
-class User extends ActiveRecordEntity
+class User extends ActiveRecordEntity   
 // class User
 {
     /** @var string */
@@ -39,7 +39,7 @@ class User extends ActiveRecordEntity
     protected static function getTableName(): string
     {
         return 'users';
-    }
+    }       
     // public function getEmail(): string
     // {
     //     return $this->email;
