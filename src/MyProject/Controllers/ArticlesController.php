@@ -31,6 +31,19 @@ class ArticlesController{
         $article = Article::getById($articleId);
         // $article = Article::getById($articleId)
 
+        $reflector = new \ReflectionObject($article);
+        // $properties = $reflector->newInstance();
+        // $properties = $reflector->getConstants();
+        // $properties = $reflector->getMethods();
+        $properties = $reflector->getProperties();
+        $propertiesNames = [];
+        foreach ($properties as $property) {
+            $propertiesNames[] = $property->getName();
+        }
+        var_dump($propertiesNames);
+        // var_dump($properties);
+        return;
+
         if ($article === null) {
         // if($result === []) {
             // в случае ошибки
