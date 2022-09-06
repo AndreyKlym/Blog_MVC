@@ -68,4 +68,64 @@ abstract class ActiveRecordEntity
     // объявили абстрактный protected static метод getTableName(), который должен вернуть строку – имя таблицы. Так как метод абстрактный, то все сущности, которые будут наследоваться от этого класса, должны будут его реализовать.
     abstract protected static function getTableName(): string;
 
+    // выведем массив, полученный с помощью этого метода в методе save()
+    public function save(): void
+    {
+        $mappedProperties = $this->mapPropertiesToDbFormat();
+        // var_dump($mappedProperties);
+        if($this->id !== null){
+            $this->update($mappedProperties);
+        }else{
+            $this->insert($mappedProperties);
+        }
+    }
+
+    private function update(array $mappedProperties): void
+    {
+        //здесь мы обновляем существующую запись в базе
+        $columns2params = [];
+        $params2values = [];
+        $index = 2;
+        foreach ($mappedProperties as $column => $value) {
+            $param = ':param' . $index; // :param1
+            $columns2params[] = $column . ' = ' . $param; // column1 = :param1
+            $params2values[$param] = $value; // [:param1 => value1]
+            $index++;
+        }
+        $sql = 'UPDATE ' . static::getTableName() . ' SET ' . implode(', ', $columns2params) . ' WHERE id = ' . $this->id;
+        $db = Db::getInstance();
+        $db-> query($sql, $params2values, static::class);
+        // var_dump($columns2params);
+        // var_dump($sql);
+        // var_dump($params2values);
+    }
+
+    private function insert(array $mappedProperties): void
+    {
+        //здесь мы создаём новую запись в базе
+    }
+
+    // напишем метод, который прочитает все свойства объекта и создаст массив вида   'название_свойства1' => значение свойства1,
+    private function mapPropertiesToDbFormat(): array
+    {
+        $reflector = new \ReflectionObject($this);
+        $properties = $reflector->getProperties();
+    
+        $mappedProperties = [];
+        foreach ($properties as $property) {
+            $propertyName = $property->getName();
+            $propertyNameAsUnderscore = $this->camelCaseToUnderscore($propertyName);
+            $mappedProperties[$propertyNameAsUnderscore] = $this->$propertyName;
+        }
+        // получили все свойства, и затем каждое имяСвойства привели к имя_свойства. После чего в массив $mappedProperties мы стали добавлять элементы с ключами «имя_свойства» и со значениями этих свойств
+    
+        return $mappedProperties;
+    }
+    
+    // метод будет преобразовывать строки типа authorId в author_id
+    private function camelCaseToUnderscore(string $source): string
+    {
+        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $source));
+    }
+
 }

@@ -1,62 +1,50 @@
 <?php
+
 namespace MyProject\Controllers;
 
-// use MyProject\Services\Db;
 use MyProject\Models\Articles\Article;
 use MyProject\View\View;
 
-class ArticlesController{
-
+class ArticlesController
+{
     /** @var View */
     private $view;
-
-    // /** @var Db */
-    // private $db;
 
     public function __construct()
     {
         $this->view = new View(__DIR__ . '/../../../templates');
-        // $this->db = new Db();
     }
 
-    public function view(int $articleId){
-        // $result = $this -> db -> query(
-        //     'SELECT * FROM articles INNER JOIN users ON articles.author_id = users.id WHERE articles.id = :id; ',
-        //     // 'SELECT * FROM `articles` WHERE id = :id; ',
-        //     [':id' => $articleId]
-        // );
-        // echo 'Здесь будет получение статьи и рендеринг шаблона' . '<hr>';
-        // var_dump($result);
-
+    public function view(int $articleId): void
+    {
         $article = Article::getById($articleId);
-        // $article = Article::getById($articleId)
-
-        $reflector = new \ReflectionObject($article);
-        // $properties = $reflector->newInstance();
-        // $properties = $reflector->getConstants();
-        // $properties = $reflector->getMethods();
-        $properties = $reflector->getProperties();
-        $propertiesNames = [];
-        foreach ($properties as $property) {
-            $propertiesNames[] = $property->getName();
-        }
-        var_dump($propertiesNames);
-        // var_dump($properties);
-        return;
 
         if ($article === null) {
-        // if($result === []) {
-            // в случае ошибки
-            $this -> view -> renderHtml('errors/404.php', [], 404);
+            $this->view->renderHtml('errors/404.php', [], 404);
             return;
         }
-        // $this -> view -> renderHtml('articles/view.php', ['article' => $result[0]]);
-
-        // $articleAuthor = User::getById($article->getAuthorId());
 
         $this->view->renderHtml('articles/view.php', [
-            'article' => $article,
+            'article' => $article
         ]);
     }
 
+
+    public function edit(int $articleId): void
+    {
+        /** @var Article $article */
+        $article = Article::getById($articleId);
+
+        if ($article === null) {
+            $this->view->renderHtml('errors/404.php', [], 404);
+            return;
+        }
+
+        $article->setName('Новое название статьи');
+        $article->setText('Новый текст статьи');
+
+        $article->save();
+
+        // var_dump($article);
+    }
 }
