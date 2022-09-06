@@ -19,6 +19,10 @@ class Article extends ActiveRecordEntity
     /** @var string */
     protected $createdAt;
 
+    /** @var string */
+    protected $setCreatedAt;
+
+
     /**
      * @return string
      */
@@ -71,5 +75,22 @@ class Article extends ActiveRecordEntity
     {
         $this->text = $text;
     }
+
+    /**
+     * @param string $text
+     */
+    public function setAuthorId(string $authorId): void
+    {
+        $this->authorId = $authorId;
+    }
+
+    /**
+     * @param string $text
+     */
+    public function setCreatedAt(string $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
         
 }

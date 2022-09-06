@@ -10,6 +10,8 @@ return [
     '~^articles/(\d+)$~' => [\MyProject\Controllers\ArticlesController::class, 'view'],
     // отдельный роут для изменения статей
     '~^articles/(\d+)/edit$~' => [\MyProject\Controllers\ArticlesController::class, 'edit'],
+    // отдельный роут для вставки статей
+    '~^articles/create$~' => [\MyProject\Controllers\ArticlesController::class, 'create'],
 
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
 ];

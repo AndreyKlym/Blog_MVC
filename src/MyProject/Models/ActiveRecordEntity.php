@@ -85,7 +85,7 @@ abstract class ActiveRecordEntity
         //здесь мы обновляем существующую запись в базе
         $columns2params = [];
         $params2values = [];
-        $index = 2;
+        $index = 1;
         foreach ($mappedProperties as $column => $value) {
             $param = ':param' . $index; // :param1
             $columns2params[] = $column . ' = ' . $param; // column1 = :param1
@@ -103,7 +103,25 @@ abstract class ActiveRecordEntity
     private function insert(array $mappedProperties): void
     {
         //здесь мы создаём новую запись в базе
+        $mappedPropertiesNotNull = array_filter($mappedProperties);
+
+        $columns = [];
+        $params = [];
+        $params2values = [];
+        $index = 1;
+        foreach ($mappedPropertiesNotNull as $column => $value) {
+            $params[] = ':param' . $index;
+            $columns[] = $column;
+            $params2values[':param' . $index] = $value;
+            $index++;
+        }
+
+        $sql = 'INSERT INTO ' . static::getTableName() . '(' . implode(', ', $columns) . ') VALUES (' . implode(', ', $params) . ')';
+        $db = Db::getInstance();
+        $db->query($sql, $params2values, static::class);
+        var_dump(static::class);
     }
+    
 
     // напишем метод, который прочитает все свойства объекта и создаст массив вида   'название_свойства1' => значение свойства1,
     private function mapPropertiesToDbFormat(): array

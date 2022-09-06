@@ -47,4 +47,17 @@ class ArticlesController
 
         // var_dump($article);
     }
+
+    public function create(): void
+    {
+        $article = new Article();
+        
+        $article->setName('Новая статья');
+        $article->setText('Новый текст');
+        $article->setAuthorId(2);
+        $article->setCreatedAt(date("Y-m-d H:i:s"));
+
+        $article->save();
+        var_dump($article);
+    }
 }
