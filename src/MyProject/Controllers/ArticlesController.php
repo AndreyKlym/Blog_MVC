@@ -49,6 +49,21 @@ class ArticlesController
         // var_dump($article);
     }
 
+    public function delete(int $id): void
+    // public function delete(int $articleId): void
+    {
+        /** @var Article $article */
+        $article = Article::getById($id);
+        // $article = Article::getById($articleId);
+
+        if ($article) {
+            $article->delete();
+            echo "Страница #$id удалена";
+        }else{
+            echo "Страница #$id не найдена";
+        }
+    }
+
     public function create(): void
     {
         $article = new Article();

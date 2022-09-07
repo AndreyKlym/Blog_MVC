@@ -100,6 +100,15 @@ abstract class ActiveRecordEntity
         // var_dump($params2values);
     }
 
+    public function delete(): void
+    {
+        $db = Db::getInstance();
+        $sql = 'DELETE FROM `' . static::getTableName() . '` WHERE id = :id';
+        // DELETE FROM `название таблицы` WHERE id = :id;
+        $db-> query($sql, [':id' => $this->id ]);
+        $this->id = null;  // удаляем текущий номер
+    }
+
     private function insert(array $mappedProperties): void
     {
         //здесь мы создаём новую запись в базе - получаем массив с данными статьи
