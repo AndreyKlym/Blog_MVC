@@ -102,24 +102,63 @@ abstract class ActiveRecordEntity
 
     private function insert(array $mappedProperties): void
     {
-        //здесь мы создаём новую запись в базе
-        $mappedPropertiesNotNull = array_filter($mappedProperties);
+        //здесь мы создаём новую запись в базе - получаем массив с данными статьи
+        // var_dump($mappedProperties);
 
+        // отфильтруем элементы в массиве от тех, значение которых = NULL
+        $filteredProperties = array_filter($mappedProperties);
+        // var_dump($filteredProperties);
+
+        // сформируем массив, содержащий названия столбцов в таблице
         $columns = [];
-        $params = [];
+        $paramsNames = [];
         $params2values = [];
-        $index = 1;
-        foreach ($mappedPropertiesNotNull as $column => $value) {
-            $params[] = ':param' . $index;
-            $columns[] = $column;
-            $params2values[':param' . $index] = $value;
-            $index++;
+        foreach ($filteredProperties as $columnName => $value) {
+            $columns[] = '`' . $columnName. '`';
+            // echo $columnName. '<br>';
+            // echo $value. '<br>';
+            $paramName = ':' . $columnName;
+            $paramsNames[] = $paramName;
+            $params2values[$paramName] = $value;
         }
+    
+        // var_dump($columns);
+        // var_dump($paramsNames);
+        // var_dump($params2values);
 
-        $sql = 'INSERT INTO ' . static::getTableName() . '(' . implode(', ', $columns) . ') VALUES (' . implode(', ', $params) . ')';
+        // сшиваем в строку
+        $columnsViaSemicolon = implode(', ', $columns);
+        $paramsNamesViaSemicolon = implode(', ', $paramsNames);
+        // echo $columnsViaSemicolon . '<br>';
+        // echo $paramsNamesViaSemicolon . '<br>';
+    
+        $sql = 'INSERT INTO ' . static::getTableName() . ' (' . $columnsViaSemicolon . ') VALUES (' . $paramsNamesViaSemicolon . ');';
+    
+        var_dump($sql);
+        // string(112) "INSERT INTO articles (`name`, `text`, `author_id`, `created_at`) VALUES (:name, :text, :author_id, :created_at);"
+
         $db = Db::getInstance();
         $db->query($sql, $params2values, static::class);
-        var_dump(static::class);
+        // получаем id последней вставленной записи в базе (в рамках текущей сессии работы с БД) через метод lastInsertId()
+        $this->id=$db->getLastInsertId();
+        $this->refresh();
+    }
+
+    // обновление полей объекта  значениями из БД (в т.ч. createdAt)
+    private function refresh(): void{
+        $objectFromDb = static::getById($this->id);
+        $reflector = new \ReflectionObject($objectFromDb);
+        $properties = $reflector->getProperties();
+        // var_dump($properties);
+
+        foreach ($properties as $property) {
+            $property->setAccessible(true); // Делает свойство доступным (делает их публичными)
+            $propertyName = $property->getName();   // читает их имя;
+            // var_dump($propertyName);
+            // var_dump($this->$propertyName);
+            // var_dump($property->getValue($objectFromDb));
+            $this->$propertyName = $property->getValue($objectFromDb);  // в текущем объекте свойству с таким же именем задаёт значение из свойства, взятого у объекта из базы ($objectFromDb).
+        }
     }
     
 

@@ -4,6 +4,7 @@ namespace MyProject\Controllers;
 
 use MyProject\Models\Articles\Article;
 use MyProject\View\View;
+use MyProject\Models\Users\User;   // неймспейс для модели User
 
 class ArticlesController
 {
@@ -60,4 +61,21 @@ class ArticlesController
         $article->save();
         var_dump($article);
     }
+
+    public function add(): void
+    {
+        $author = User::getById(3);
+
+        $article = new Article();
+        $article->setAuthor($author);
+        
+        $article->setName('Новая название статьи');
+        $article->setText('Новый текст для новой статьи');
+        // $article->setCreatedAt(date("Y-m-d H:i:s"));
+
+        $article->save();
+        var_dump($article);
+    }
+
+
 }

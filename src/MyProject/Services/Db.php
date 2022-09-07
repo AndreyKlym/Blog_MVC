@@ -50,7 +50,7 @@ class Db
         // return $sth->fetchAll();
     }
 
-    
+
     // добавим специальный статический метод, который будет делать следующее:
     // - проверять, что свойство $instance не равно null
     // - если оно равно null, будет создан новый объект класса Db, а затем помещён в это свойство
@@ -61,6 +61,12 @@ class Db
         }
 
         return self::$instance;
+    }
+
+    // получаем id последней вставленной записи в базе (в рамках текущей сессии работы с БД) через метод lastInsertId()
+    public function getLastInsertId(): int
+    {
+        return (int) $this->pdo->lastInsertId();
     }
     
 }

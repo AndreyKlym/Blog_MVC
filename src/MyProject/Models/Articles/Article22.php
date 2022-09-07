@@ -2,7 +2,6 @@
 
 namespace MyProject\Models\Articles;
 
-use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
 
@@ -14,11 +13,15 @@ class Article extends ActiveRecordEntity
     /** @var string */
     protected $text;
 
-    /** @var int */
+    /** @var string */
     protected $authorId;
 
     /** @var string */
     protected $createdAt;
+
+    /** @var string */
+    protected $setCreatedAt;
+
 
     /**
      * @return string
@@ -34,6 +37,19 @@ class Article extends ActiveRecordEntity
     public function getText(): string
     {
         return $this->text;
+    }
+
+    protected static function getTableName(): string
+    {
+        return 'articles';
+    }
+    
+    /**
+     * @return int
+     */
+    public function getAuthorId(): int
+    {
+        return (int) $this->authorId;
     }
 
     /**
@@ -61,54 +77,28 @@ class Article extends ActiveRecordEntity
     }
 
     /**
-     * @param User $user
+     * @param string $text
      */
-    public function setAuthor(User $user): void
+    public function setAuthorId(string $authorId): void
     {
-        $this->authorId = $user->getId();
+        $this->authorId = $authorId;
     }
 
-    public static function createFromArray(array $fields, User $author): Article
+    /**
+     * @param User $author
+     */
+    public function setAuthor(User $author): void
     {
-        if (empty($fields['name'])) {
-            throw new InvalidArgumentException('Не передано название статьи');
-        }
-
-        if (empty($fields['text'])) {
-            throw new InvalidArgumentException('Не передан текст статьи');
-        }
-
-        $article = new Article();
-
-        $article->setAuthor($author);
-        $article->setName($fields['name']);
-        $article->setText($fields['text']);
-
-        $article->save();
-
-        return $article;
+        $this->authorId = $author->getId();
     }
 
-    public function updateFromArray(array $fields): Article
+    /**
+     * @param string $text
+     */
+    public function setCreatedAt(string $createdAt): void
     {
-        if (empty($fields['name'])) {
-            throw new InvalidArgumentException('Не передано название статьи');
-        }
-
-        if (empty($fields['text'])) {
-            throw new InvalidArgumentException('Не передан текст статьи');
-        }
-
-        $this->setName($fields['name']);
-        $this->setText($fields['text']);
-
-        $this->save();
-
-        return $this;
+        $this->createdAt = $createdAt;
     }
 
-    protected static function getTableName(): string
-    {
-        return 'articles';
-    }
+        
 }
