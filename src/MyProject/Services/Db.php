@@ -2,6 +2,9 @@
 
 namespace MyProject\Services;
 
+use MyProject\Exceptions\DbException;
+
+
 class Db
 {
     // добавим классу статическое свойство $instancesCount, по умолчанию равное нулю.
@@ -13,19 +16,26 @@ class Db
     /** @var \PDO */
     private $pdo;
 
-    public function __construct()
+    // public function __construct()
+    private function __construct()
     {
         // добавим классу статическое свойство $instancesCount, по умолчанию равное нулю.
         // self::$instancesCount++;
 
         $dbOptions = (require __DIR__ . '/../../settings.php')['db'];
 
-        $this->pdo = new \PDO(
-            'mysql:host=' . $dbOptions['host'] . ';dbname=' . $dbOptions['dbname'],
-            $dbOptions['user'],
-            $dbOptions['password']
-        );
-        $this->pdo->exec('SET NAMES UTF8');
+        // создадим «ловушки» для стандартных исключениий класса PDOException, и будем заменять их своими исключениями
+        try{
+            $this->pdo = new \PDO(
+                'mysql:host=' . $dbOptions['host'] . ';dbname=' . $dbOptions['dbname'],
+                $dbOptions['user'],
+                $dbOptions['password']
+            );
+            $this->pdo->exec('SET NAMES UTF8');
+        } catch (\PDOException $e) {
+            // и будем заменять их своими исключениями
+            throw new DbException('Ошибка при подключении к базе данных: ' . $e->getMessage());
+        }
     }
 
     // добавим публичный статический метод, который будет возвращать значение этого счётчика

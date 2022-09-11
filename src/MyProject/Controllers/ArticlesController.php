@@ -2,9 +2,10 @@
 
 namespace MyProject\Controllers;
 
+use MyProject\Exceptions\NotFoundException;
 use MyProject\Models\Articles\Article;
-use MyProject\View\View;
 use MyProject\Models\Users\User;   // неймспейс для модели User
+use MyProject\View\View;
 
 class ArticlesController
 {
@@ -21,7 +22,8 @@ class ArticlesController
         $article = Article::getById($articleId);
 
         if ($article === null) {
-            $this->view->renderHtml('errors/404.php', [], 404);
+            // $this->view->renderHtml('errors/404.php', [], 404);
+            throw new NotFoundException();
             return;
         }
 
@@ -37,7 +39,8 @@ class ArticlesController
         $article = Article::getById($articleId);
 
         if ($article === null) {
-            $this->view->renderHtml('errors/404.php', [], 404);
+            // $this->view->renderHtml('errors/404.php', [], 404);
+            throw new NotFoundException();
             return;
         }
 
