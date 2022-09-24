@@ -17,14 +17,13 @@ class ArticlesController
         $this->view = new View(__DIR__ . '/../../../templates');
     }
 
-    public function view(int $articleId): void
+    public function view(int $articleId)
     {
         $article = Article::getById($articleId);
 
         if ($article === null) {
             // $this->view->renderHtml('errors/404.php', [], 404);
             throw new NotFoundException();
-            return;
         }
 
         $this->view->renderHtml('articles/view.php', [
@@ -33,15 +32,13 @@ class ArticlesController
     }
 
 
-    public function edit(int $articleId): void
+    public function edit(int $articleId)
     {
-        /** @var Article $article */
         $article = Article::getById($articleId);
 
         if ($article === null) {
             // $this->view->renderHtml('errors/404.php', [], 404);
             throw new NotFoundException();
-            return;
         }
 
         $article->setName('Новое название статьи');
@@ -52,33 +49,7 @@ class ArticlesController
         // var_dump($article);
     }
 
-    public function delete(int $id): void
-    // public function delete(int $articleId): void
-    {
-        /** @var Article $article */
-        $article = Article::getById($id);
-        // $article = Article::getById($articleId);
 
-        if ($article) {
-            $article->delete();
-            echo "Страница #$id удалена";
-        }else{
-            echo "Страница #$id не найдена";
-        }
-    }
-
-    public function create(): void
-    {
-        $article = new Article();
-        
-        $article->setName('Новая статья');
-        $article->setText('Новый текст');
-        $article->setAuthorId(2);
-        $article->setCreatedAt(date("Y-m-d H:i:s"));
-
-        $article->save();
-        var_dump($article);
-    }
 
     public function add(): void
     {
@@ -94,6 +65,37 @@ class ArticlesController
         $article->save();
         var_dump($article);
     }
+
+    public function create(): void
+    {
+        $article = new Article();
+
+        $article->setName('Новая статья');
+        $article->setText('Новый текст');
+        $article->setAuthorId(2);
+        $article->setCreatedAt(date("Y-m-d H:i:s"));
+
+        $article->save();
+        var_dump($article);
+    }
+
+
+    public function delete(int $id): void
+        // public function delete(int $articleId): void
+    {
+        /** @var Article $article */
+        $article = Article::getById($id);
+        // $article = Article::getById($articleId);
+
+        if ($article) {
+            $article->delete();
+            echo "Страница #$id удалена";
+        }else{
+            echo "Страница #$id не найдена";
+        }
+    }
+
+
 
 
 }
