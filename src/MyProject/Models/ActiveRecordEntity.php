@@ -112,11 +112,11 @@ abstract class ActiveRecordEntity
     private function insert(array $mappedProperties): void
     {
         //здесь мы создаём новую запись в базе - получаем массив с данными статьи
-        // var_dump($mappedProperties);
+//         var_dump($mappedProperties);
 
         // отфильтруем элементы в массиве от тех, значение которых = NULL
         $filteredProperties = array_filter($mappedProperties);
-        // var_dump($filteredProperties);
+//         var_dump($filteredProperties);
 
         // сформируем массив, содержащий названия столбцов в таблице
         $columns = [];
@@ -131,9 +131,9 @@ abstract class ActiveRecordEntity
             $params2values[$paramName] = $value;
         }
     
-        // var_dump($columns);
-        // var_dump($paramsNames);
-        // var_dump($params2values);
+//         var_dump($columns);
+//         var_dump($paramsNames);
+//         var_dump($params2values);
 
         // сшиваем в строку
         $columnsViaSemicolon = implode(', ', $columns);
