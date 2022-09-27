@@ -15,7 +15,7 @@ try{
     );
 
     $route = $_GET['route'] ?? '';
-    $routes = require __DIR__ . '/../src/routes.php';
+        $routes = require __DIR__ . '/../src/routes.php';
 
     // var_dump($routes);
 

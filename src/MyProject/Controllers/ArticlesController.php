@@ -37,7 +37,8 @@ class ArticlesController
         $article = Article::getById($articleId);
 
         if ($article === null) {
-            // $this->view->renderHtml('errors/404.php', [], 404);
+//            $this->view->renderHtml('errors/404.php', [], 404);
+//            return;
             throw new NotFoundException();
         }
 
