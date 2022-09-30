@@ -16,8 +16,7 @@ class Db
     /** @var \PDO */
     private $pdo;
 
-    // public function __construct()
-    private function __construct()
+     public function __construct()
     {
         // добавим классу статическое свойство $instancesCount, по умолчанию равное нулю.
         // self::$instancesCount++;

@@ -59,7 +59,7 @@ class ArticlesController
         $article = new Article();
         $article->setAuthor($author);
         
-        $article->setName('Новая название статьи');
+        $article->setName('Новая статья');
         $article->setText('Новый текст для новой статьи');
         // $article->setCreatedAt(date("Y-m-d H:i:s"));
 
