@@ -19,5 +19,8 @@ return [
     // '~^articles/add$~' => [\MyProject\Controllers\ArticlesController::class, 'add'],
     '~^articles/add$~' => [\MyProject\Controllers\ArticlesController::class, 'add'],
 
+    // отдельный роут для регистрации нового пользователя
+    '~^users/register$~' => [\MyProject\Controllers\UsersController::class, 'signUp'],
+
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
 ];

@@ -1,11 +1,5 @@
 <?php
-echo '<pre>';
-
-// https://php.zone/oop-v-php-prodvinutyj-kurs/front-kontroller-i-routing-v-php
-
-// Этот кусок кода называется фронт-контроллером.
-
-// обработаем наше исключение. Для этого нам требуется поймать исключение уже с типом DbException. Так как ошибка при работе с базой данных – это критичная ошибка, которая наверняка не позволит выполняться программе дальше, нам стоит ловить её на самом низком уровне нашего приложения – во фронт-контроллере. 
+// обработаем наше исключение. Для этого нам требуется поймать исключение уже с типом DbException. Так как ошибка при работе с базой данных – это критичная ошибка, которая наверняка не позволит выполняться программе дальше, нам стоит ловить её на самом низком уровне нашего приложения – во фронт-контроллере.
 // Обернем в блок try-catch код фронт-контроллера.
 try{
     spl_autoload_register(
@@ -15,7 +9,7 @@ try{
     );
 
     $route = $_GET['route'] ?? '';
-        $routes = require __DIR__ . '/../src/routes.php';
+    $routes = require __DIR__ . '/../src/routes.php';
 
     // var_dump($routes);
 
@@ -30,8 +24,8 @@ try{
 
 
     if(!$isRouteFound){
-        // echo 'Страница не найдена!';
-        // return;
+//         echo 'Страница не найдена!';
+//         return;
         throw new \MyProject\Exceptions\NotFoundException();
     }
 
@@ -43,7 +37,7 @@ try{
 
     $controllerName = $controllerAndAction[0];
     $actionName = $controllerAndAction[1];
-        $userName = $matches[1]; // для $controller->$actionName($userName);
+//    $userName = $matches[1]; // для $controller->$actionName($userName);
 
     // echo '<hr>';
     // var_dump($controllerName);
@@ -52,10 +46,10 @@ try{
     // echo '<hr>';
 
     $controller = new $controllerName();
-    // $controller->$actionName($userName);
+//     $controller->$actionName($userName);
     $controller->$actionName(...$matches);
 } catch (\MyProject\Exceptions\DbException $e) {
-    // echo $e->getMessage();
+//     echo $e->getMessage();
     $view = new \MyProject\View\View(__DIR__ . '/../templates/errors');
     $view->renderHtml('500.php', ['error' => $e->getMessage()], 500);
 } catch (\MyProject\Exceptions\NotFoundException $e) {
