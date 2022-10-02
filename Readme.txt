@@ -17,3 +17,5 @@ https://php.zone/oop-v-php-prodvinutyj-kurs/exceptions-v-php
 
 Registration on website PHP
 https://php.zone/oop-v-php-prodvinutyj-kurs/kak-sdelat-registraciyu-na-sayte-na-php-forma-registracii
+
+The END
