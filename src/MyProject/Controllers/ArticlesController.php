@@ -54,7 +54,7 @@ class ArticlesController
 
     public function add(): void
     {
-        $author = User::getById(3);
+        $author = User::getById(2);
 
         $article = new Article();
         $article->setAuthor($author);
