@@ -47,7 +47,8 @@ class User extends ActiveRecordEntity
     // }
 
 //создадим в модели пользователя статический метод, который будет принимать на вход массив с данными, пришедшими от пользователя, и будет пытаться создать нового пользователя и сохранить его в базе данных.
-    public static function signUp(array $userData)
+//    public static function signUp(array $userData)
+    public static function signUp(array $userData): User
     {
         if (empty($userData['nickname'])) {
             throw new InvalidArgumentException('Не передан nickname');
@@ -73,7 +74,7 @@ class User extends ActiveRecordEntity
             throw new InvalidArgumentException('Пароль должен быть не менее 4 символов');
         }
 
-        var_dump($userData);
+//        var_dump($userData);
 
 
         if (static::findOneByColumn('nickname', $userData['nickname']) !== null) {
@@ -94,9 +95,8 @@ class User extends ActiveRecordEntity
         $user->role = 'user';
         $user->authToken = sha1(random_bytes(100)) . sha1(random_bytes(100));
         $user->save();
-
+//        В конце метода мы сохраняем этого нового пользователя в базу и возвращаем его из метода
         return $user;
-
 
     }
 

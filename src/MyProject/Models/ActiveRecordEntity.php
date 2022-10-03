@@ -143,7 +143,7 @@ abstract class ActiveRecordEntity
     
         $sql = 'INSERT INTO ' . static::getTableName() . ' (' . $columnsViaSemicolon . ') VALUES (' . $paramsNamesViaSemicolon . ');';
     
-        var_dump($sql);
+//        var_dump($sql);
         // string(112) "INSERT INTO articles (`name`, `text`, `author_id`, `created_at`) VALUES (:name, :text, :author_id, :created_at);"
 
         $db = Db::getInstance();
