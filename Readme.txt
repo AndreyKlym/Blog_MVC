@@ -18,4 +18,13 @@ https://php.zone/oop-v-php-prodvinutyj-kurs/exceptions-v-php
 Registration on website PHP
 https://php.zone/oop-v-php-prodvinutyj-kurs/kak-sdelat-registraciyu-na-sayte-na-php-forma-registracii
 
-The END
+Activation users by email PHP
+https://php.zone/oop-v-php-prodvinutyj-kurs/kak-sdelat-aktivaciyu-polzovateley-po-email-na-php
+
+
+
+
+?????????????
+Неймспейсы и автозагрузка в PHP
+
+https://php.zone/oop-v-php-prodvinutyj-kurs/namespace-i-avtozagruzka-klassov-v-php

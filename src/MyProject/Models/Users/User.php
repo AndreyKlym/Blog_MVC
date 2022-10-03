@@ -41,10 +41,10 @@ class User extends ActiveRecordEntity
     {
         return 'users';
     }       
-    // public function getEmail(): string
-    // {
-    //     return $this->email;
-    // }
+     public function getEmail(): string
+     {
+         return $this->email;
+     }
 
 //создадим в модели пользователя статический метод, который будет принимать на вход массив с данными, пришедшими от пользователя, и будет пытаться создать нового пользователя и сохранить его в базе данных.
 //    public static function signUp(array $userData)
@@ -99,5 +99,13 @@ class User extends ActiveRecordEntity
         return $user;
 
     }
+
+    public function activate(): void
+    {
+        $this->isConfirmed = true;
+        $this->save();
+    }
+
+
 
 }

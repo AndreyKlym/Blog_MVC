@@ -20,7 +20,11 @@ return [
     '~^articles/add$~' => [\MyProject\Controllers\ArticlesController::class, 'add'],
 
     // отдельный роут для регистрации нового пользователя
+
     '~^users/register$~' => [\MyProject\Controllers\UsersController::class, 'signUp'],
+
+    // отдельный роут для активации нового пользователя
+    '~^users/(\d+)/activate/(.+)$~' => [\MyProject\Controllers\UsersController::class, 'activate'],
 
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
 ];
