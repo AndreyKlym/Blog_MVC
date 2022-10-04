@@ -59,7 +59,7 @@ class UsersController
         $isCodeValid = UserActivationService::checkActivationCode($user, $activationCode);
         if ($isCodeValid) {
             $user->activate();
-            echo 'OK!';
+            echo 'Ваш аккаунт успешно активирован!';
         }
     }
 

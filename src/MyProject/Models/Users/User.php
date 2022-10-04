@@ -100,6 +100,7 @@ class User extends ActiveRecordEntity
 
     }
 
+//    активация пользователя
     public function activate(): void
     {
         $this->isConfirmed = true;
