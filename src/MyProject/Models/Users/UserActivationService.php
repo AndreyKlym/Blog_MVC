@@ -40,15 +40,12 @@ class UserActivationService
         return !empty($result);
 
     }    public static function deleteActivationCode(User $user): bool
-//    }    public static function deleteActivationCode(User $user, string $code): bool
     {
         $db = Db::getInstance();
         $result = $db->query(
-            'DELETW * FROM ' . self::TABLE_NAME . ' WHERE user_id = :user_id',
-//            'DELETW * FROM ' . self::TABLE_NAME . ' WHERE user_id = :user_id AND code = :code',
+            'DELETE * FROM ' . self::TABLE_NAME . ' WHERE user_id = :user_id',
             [
                 'user_id' => $user->getId()
-//                'code' => $code
             ]
         );
         return !empty($result);

@@ -60,7 +60,11 @@ class UsersController
         if ($isCodeValid) {
             $user->activate();
             echo 'Ваш аккаунт успешно активирован!';
+            echo '<br>';
+            echo $userId;
         }
+        UserActivationService::deleteActivationCode($user);
+
     }
 
 
