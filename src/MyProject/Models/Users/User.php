@@ -40,7 +40,8 @@ class User extends ActiveRecordEntity
     protected static function getTableName(): string
     {
         return 'users';
-    }       
+    }
+
      public function getEmail(): string
      {
          return $this->email;
@@ -50,6 +51,8 @@ class User extends ActiveRecordEntity
 //    public static function signUp(array $userData)
     public static function signUp(array $userData): User
     {
+//        var_dump($userData);
+
         if (empty($userData['nickname'])) {
             throw new InvalidArgumentException('Не передан nickname');
         }
@@ -74,7 +77,6 @@ class User extends ActiveRecordEntity
             throw new InvalidArgumentException('Пароль должен быть не менее 4 символов');
         }
 
-//        var_dump($userData);
 
 
         if (static::findOneByColumn('nickname', $userData['nickname']) !== null) {
@@ -85,8 +87,7 @@ class User extends ActiveRecordEntity
             throw new InvalidArgumentException('Пользователь с таким email уже существует');
         }
 
-
-
+//когда все проверки пройдены создаем нового пользователя и сохранить его в базе данных.
         $user = new User();
         $user->nickname = $userData['nickname'];
         $user->email = $userData['email'];

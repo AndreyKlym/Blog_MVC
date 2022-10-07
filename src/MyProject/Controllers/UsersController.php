@@ -53,17 +53,52 @@ class UsersController
     }
 
 
-    public function activate(int $userId, string $activationCode)
+    public function activate(int $userId, string $activationCode): void
     {
-        $user = User::getById($userId);
-        $isCodeValid = UserActivationService::checkActivationCode($user, $activationCode);
-        if ($isCodeValid) {
-            $user->activate();
-            echo 'Ваш аккаунт успешно активирован!';
-            echo '<br>';
-            echo $userId;
+        try {
+            $user = User::getById($userId);
+
+            if($user === null) {
+                throw new InvalidArgumentException('Пользователь не найден');
+//                throw new ActivationException('Пользователь не найден');
+            }
+
+//            if($user ->isConfirmed())  {
+            if($user ->isConfirmed = false)  {
+                throw new InvalidArgumentException('Пользователь уже активирован');
+//                throw new ActivationException('Пользователь уже активирован');
+            }
+
+
+            $isCodeValid = UserActivationService::checkActivationCode($user, $activationCode);
+            var_dump($isCodeValid);
+
+            if (!$isCodeValid) {
+                throw new InvalidArgumentException('Неверный код активации');
+//                throw new ActivationException('Неверный код активации');
+            }
+
+
+            if ($isCodeValid) {
+                $user->activate();
+
+                echo 'Ваш аккаунт успешно активирован!';
+                echo '<br>';
+                echo $userId;
+
+                $this->view->renderHtml('users/successfulActivation.php');
+
+                UserActivationService::deleteActivationCode($user, $activationCode);
+//                UserActivationService::deleteActivationCode($user);
+                return;
+            }
+        } catch (InvalidArgumentException $e) {
+//        }catch (ActivationException $e) {
+            $this->view->renderHtml('users/nonexistentCode.php', ['error' => $e->getMessage()] );
+
+
+
         }
-        UserActivationService::deleteActivationCode($user);
 
     }
 
