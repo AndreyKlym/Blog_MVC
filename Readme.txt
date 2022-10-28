@@ -21,7 +21,8 @@ https://php.zone/oop-v-php-prodvinutyj-kurs/kak-sdelat-registraciyu-na-sayte-na-
 Activation users by email PHP
 https://php.zone/oop-v-php-prodvinutyj-kurs/kak-sdelat-aktivaciyu-polzovateley-po-email-na-php
 
-
+Autorization system on PHP
+https://php.zone/oop-v-php-prodvinutyj-kurs/kak-sdelat-avtorizaciyu-na-sayte-na-php-forma-vhoda
 
 
 ?????????????

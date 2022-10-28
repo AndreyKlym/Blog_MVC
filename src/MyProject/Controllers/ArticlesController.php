@@ -5,17 +5,28 @@ namespace MyProject\Controllers;
 use MyProject\Exceptions\NotFoundException;
 use MyProject\Models\Articles\Article;
 use MyProject\Models\Users\User;   // неймспейс для модели User
+
 use MyProject\View\View;
+use MyProject\Models\Users\UsersAuthService;
 
-class ArticlesController
+class ArticlesController extends AbstractController
+//class ArticlesController
 {
-    /** @var View */
-    private $view;
 
-    public function __construct()
-    {
-        $this->view = new View(__DIR__ . '/../../../templates');
-    }
+    //    // !!!!!!!   перенесли в AbstractController
+    //    /** @var View */
+    //    private $view;
+    //
+    //    /** @var User|null*/
+    //    private $user;
+
+    //    // !!!!!!!   перенесли в AbstractController
+//        public function __construct()
+//        {
+//            $this->user = UsersAuthService::getUserByToken();
+//            $this->view = new View(__DIR__ . '/../../../templates');
+//            $this->view->setVar('user', $this->user);
+//        }
 
     public function view(int $articleId)
     {

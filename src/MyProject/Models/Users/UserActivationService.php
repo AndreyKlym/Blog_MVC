@@ -37,7 +37,7 @@ class UserActivationService
                 'code' => $code
             ]
         );
-        var_dump($result);
+//        var_dump($result);
         return !empty($result);
 
     }
@@ -55,7 +55,7 @@ class UserActivationService
                     ':code' => $code
                 ]
             );
-            var_dump($result);
+            return !empty($result);
         }
 
 

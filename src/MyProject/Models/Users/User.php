@@ -3,6 +3,7 @@
 namespace MyProject\Models\Users;
 
 use MyProject\Models\ActiveRecordEntity;
+use MyProject\Models\UsersAuthService;
 use MyProject\Exceptions\InvalidArgumentException;
 
 class User extends ActiveRecordEntity   
@@ -47,6 +48,14 @@ class User extends ActiveRecordEntity
          return $this->email;
      }
 
+    /**
+     * @return string
+     */
+    public function getAuthToken(): string
+    {
+        return $this->authToken;
+    }
+
 //создадим в модели пользователя статический метод, который будет принимать на вход массив с данными, пришедшими от пользователя, и будет пытаться создать нового пользователя и сохранить его в базе данных.
 //    public static function signUp(array $userData)
     public static function signUp(array $userData): User
@@ -87,7 +96,7 @@ class User extends ActiveRecordEntity
             throw new InvalidArgumentException('Пользователь с таким email уже существует');
         }
 
-//когда все проверки пройдены создаем нового пользователя и сохранить его в базе данных.
+        //когда все проверки пройдены создаем нового пользователя и сохранить его в базе данных.
         $user = new User();
         $user->nickname = $userData['nickname'];
         $user->email = $userData['email'];
@@ -96,17 +105,59 @@ class User extends ActiveRecordEntity
         $user->role = 'user';
         $user->authToken = sha1(random_bytes(100)) . sha1(random_bytes(100));
         $user->save();
-//        В конце метода мы сохраняем этого нового пользователя в базу и возвращаем его из метода
+        //        В конце метода мы сохраняем этого нового пользователя в базу и возвращаем его из метода
         return $user;
 
     }
 
-//    активация пользователя
+    //    активация пользователя
     public function activate(): void
     {
         $this->isConfirmed = true;
         $this->save();
     }
+
+    //    авторизация пользователя
+    public static function login(array $loginData): User
+    {
+            //        var_dump($userDataU);
+
+        if (empty($loginData['email'])) {
+            throw new InvalidArgumentException('Не передан email');
+        }
+        if (empty($loginData['password'])) {
+            throw new InvalidArgumentException('Не передан password');
+        }
+
+        $user = User::findOneByColumn('email', $loginData['email']);
+        if($user === null) {
+            throw new InvalidArgumentException('Пользователь с таким email не найден');
+        }
+
+        if (!password_verify($loginData['password'], $user->getPasswordHash())) {
+            throw new InvalidArgumentException('Неправильный пароль');
+        }
+
+        if (!$user->isConfirmed) {
+            throw new InvalidArgumentException('Пользователь не подтвержден');
+        }
+
+        $user->refreshAuthToken();
+        $user->save();
+
+        return $user;
+    }
+
+    public function getPasswordHash(): string
+    {
+        return $this->passwordHash;
+    }
+
+    public function refreshAuthToken()
+    {
+        $this->authToken = sha1(random_bytes(100)) . sha1(random_bytes(100));
+    }
+    //при успешном входе auth token пользователя в базе обновляется – все его предыдущие сессии станут недействительными.
 
 
 

@@ -100,15 +100,6 @@ abstract class ActiveRecordEntity
         // var_dump($params2values);
     }
 
-    public function delete(): void
-    {
-        $db = Db::getInstance();
-        $sql = 'DELETE FROM `' . static::getTableName() . '` WHERE id = :id';
-        // DELETE FROM `название таблицы` WHERE id = :id;
-        $db-> query($sql, [':id' => $this->id ]);
-        $this->id = null;  // удаляем текущий номер
-    }
-
     private function insert(array $mappedProperties): void
     {
         //здесь мы создаём новую запись в базе - получаем массив с данными статьи
@@ -153,6 +144,7 @@ abstract class ActiveRecordEntity
         $this->refresh();
     }
 
+
     // обновление полей объекта  значениями из БД (в т.ч. createdAt)
     private function refresh(): void{
         $objectFromDb = static::getById($this->id);
@@ -169,7 +161,15 @@ abstract class ActiveRecordEntity
             $this->$propertyName = $property->getValue($objectFromDb);  // в текущем объекте свойству с таким же именем задаёт значение из свойства, взятого у объекта из базы ($objectFromDb).
         }
     }
-    
+
+    public function delete(): void
+    {
+        $db = Db::getInstance();
+        $sql = 'DELETE FROM `' . static::getTableName() . '` WHERE id = :id';
+        // DELETE FROM `название таблицы` WHERE id = :id;
+        $db-> query($sql, [':id' => $this->id ]);
+        $this->id = null;  // удаляем текущий номер
+    }
 
     // напишем метод, который прочитает все свойства объекта и создаст массив вида   'название_свойства1' => значение свойства1,
     private function mapPropertiesToDbFormat(): array

@@ -2,27 +2,31 @@
 
 namespace MyProject\Controllers;
 
-use MyProject\View\View;
+use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Models\Users\User;   // неймспейс для модели User
 use MyProject\Models\Users\UserActivationService;   // неймспейс для модели User
+use MyProject\Models\Users\UsersAuthService;   // неймспейс для модели User
 use MyProject\Services\EmailSender;
 
-use MyProject\Exceptions\InvalidArgumentException;
-
+use MyProject\View\View;
 use MyProject\Exceptions\NotFoundException;
 use MyProject\Models\Articles\Article;
 
 
 
-class UsersController
+class UsersController extends AbstractController
+//class UsersController
 {
-    /** @var View */
-    private $view;
 
-    public function __construct()
-    {
-        $this->view = new View(__DIR__ . '/../../../templates');
-    }
+    // !!!!!!!   перенесли в AbstractController
+//    /** @var View */
+//    private $view;
+
+    // !!!!!!!   перенесли в AbstractController
+//    public function __construct()
+//    {
+//        $this->view = new View(__DIR__ . '/../../../templates');
+//    }
 
 
     public function signUp()
@@ -60,22 +64,19 @@ class UsersController
 
             if($user === null) {
                 throw new InvalidArgumentException('Пользователь не найден');
-//                throw new ActivationException('Пользователь не найден');
             }
 
 //            if($user ->isConfirmed())  {
             if($user ->isConfirmed = false)  {
                 throw new InvalidArgumentException('Пользователь уже активирован');
-//                throw new ActivationException('Пользователь уже активирован');
             }
 
 
             $isCodeValid = UserActivationService::checkActivationCode($user, $activationCode);
-            var_dump($isCodeValid);
+//            var_dump($isCodeValid);
 
             if (!$isCodeValid) {
                 throw new InvalidArgumentException('Неверный код активации');
-//                throw new ActivationException('Неверный код активации');
             }
 
 
@@ -93,14 +94,36 @@ class UsersController
                 return;
             }
         } catch (InvalidArgumentException $e) {
-//        }catch (ActivationException $e) {
             $this->view->renderHtml('users/nonexistentCode.php', ['error' => $e->getMessage()] );
-
-
 
         }
 
     }
+
+
+    public function login()
+    {
+        if (!empty($_POST)) {
+            try {
+                $user = User::login($_POST);
+                var_dump($user);
+
+//                специальный сервис, который будет работать с пользовательскими сессиями через Cookie.
+//                создания нужной Cookie в контроллере
+                UsersAuthService::createToken($user);
+//                header('Location: /');
+                header('Location: /www/');
+                exit();
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('users/login.php', ['error' => $e->getMessage()]);
+                return;
+            }
+        }
+
+        $this->view->renderHtml('users/login.php');
+    }
+
+
 
 
 }
