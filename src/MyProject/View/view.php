@@ -12,7 +12,7 @@ class View{
         $this -> templatesPath = $templatesPath;
     }
 
-//сделаем во View возможность добавлять переменные (пользователя) еще перед рендерингом
+    //сделаем во View возможность добавлять переменные (пользователя) еще перед рендерингом
     public function setVar(string $name, $value): void
     {
         $this->extraVars[$name] = $value;

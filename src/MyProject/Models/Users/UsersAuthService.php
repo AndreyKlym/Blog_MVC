@@ -2,9 +2,8 @@
 
 namespace MyProject\Models\Users;
 
-//обработкa ситуации, когда логин и пароль верны и метод login в модели User вернул нам пользователя.
 //специальный сервис, который будет работать с пользовательскими сессиями через Cookie.
-
+//обработкa ситуации, когда логин и пароль верны и метод login в модели User вернул нам пользователя.
 class   UsersAuthService
 {
     public static function createToken(User $user): void
@@ -12,6 +11,13 @@ class   UsersAuthService
         $token = $user->getId() . ':' . $user->getAuthToken();
         setcookie('token', $token, 0, '/', '', false, true);
         var_dump($token);
+    }
+
+    public static function deleteToken(): void
+    {
+//        $token = $user->getId() . ':' . $user->getAuthToken();
+        setcookie('token', '', time()-3600, '/', '', false, true);
+//        var_dump($token);
     }
 
     public static function getUserByToken(): ?User
@@ -22,8 +28,8 @@ class   UsersAuthService
             return null;
         }
 
-//        print_r($_COOKIE);
-//        echo $_COOKIE["token"];
+        //        print_r($_COOKIE);
+        //        echo $_COOKIE["token"];
 
         [$userId, $authToken] = explode(':', $token, 2);
 

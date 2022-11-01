@@ -123,6 +123,13 @@ class UsersController extends AbstractController
         $this->view->renderHtml('users/login.php');
     }
 
+    public function logout()
+    {
+        UsersAuthService::deleteToken();
+//        setcookie('token', '', time()-3600, '/', '', false, true);
+        header('Location: /www/');
+    }
+
 
 
 

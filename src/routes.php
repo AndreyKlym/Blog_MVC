@@ -28,5 +28,8 @@ return [
     // отдельный роут для авторизации пользователя
     '~^users/login$~' => [\MyProject\Controllers\UsersController::class, 'login'],
 
+    // отдельный роут для разлогинивания пользователя
+    '~^users/logout$~' => [\MyProject\Controllers\UsersController::class, 'logout'],
+
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
 ];
