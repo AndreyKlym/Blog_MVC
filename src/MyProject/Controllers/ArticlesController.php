@@ -65,17 +65,23 @@ class ArticlesController extends AbstractController
 
     public function add(): void
     {
-        $author = User::getById(2);
 
-        $article = new Article();
-        $article->setAuthor($author);
-        
-        $article->setName('Новая статья');
-        $article->setText('Новый текст для новой статьи');
-        // $article->setCreatedAt(date("Y-m-d H:i:s"));
+//         //   удалили старый шаблон для нового
+//        $author = User::getById(2);
+//
+//        $article = new Article();
+//        $article->setAuthor($author);
+//
+//        $article->setName('Новая статья');
+//        $article->setText('Новый текст для новой статьи');
+//        // $article->setCreatedAt(date("Y-m-d H:i:s"));
+//
+//        $article->save();
+//        var_dump($article);
+//
+//        $article->delete();
 
-        $article->save();
-        var_dump($article);
+        $this->view->renderHtml('articles/add.php');
     }
 
     public function create(): void

@@ -24,6 +24,10 @@ https://php.zone/oop-v-php-prodvinutyj-kurs/kak-sdelat-aktivaciyu-polzovateley-p
 Autorization system on PHP
 https://php.zone/oop-v-php-prodvinutyj-kurs/kak-sdelat-avtorizaciyu-na-sayte-na-php-forma-vhoda
 
+Add posts to blog PHP
+https://php.zone/oop-v-php-prodvinutyj-kurs/sozdanie-zapisey-v-bloge-na-php
+
+
 
 ?????????????
 Неймспейсы и автозагрузка в PHP
