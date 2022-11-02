@@ -5,7 +5,7 @@
     <div style="color: red"><?= $error ?></div>
 <?php endif; ?>
 
-<form action="/articles/add" method="post">
+<form action="/www/articles/add" method="post">
     <label for="name">Название статьи</label><br>
     <input type="text" name="name" id="name" value="<?= $_POST['name'] ?? '' ?>" size="50"><br>
     <br>

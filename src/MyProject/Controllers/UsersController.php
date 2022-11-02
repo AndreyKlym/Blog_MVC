@@ -8,9 +8,9 @@ use MyProject\Models\Users\UserActivationService;   // неймспейс для
 use MyProject\Models\Users\UsersAuthService;   // неймспейс для модели User
 use MyProject\Services\EmailSender;
 
-use MyProject\View\View;
-use MyProject\Exceptions\NotFoundException;
-use MyProject\Models\Articles\Article;
+//use MyProject\View\View;
+//use MyProject\Exceptions\NotFoundException;
+//use MyProject\Models\Articles\Article;
 
 
 
