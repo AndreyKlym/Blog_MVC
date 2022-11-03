@@ -117,6 +117,12 @@ class User extends ActiveRecordEntity
         $this->save();
     }
 
+    //    проверка пользователя на admin
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
     //    авторизация пользователя
     public static function login(array $loginData): User
     {

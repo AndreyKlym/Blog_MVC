@@ -5,6 +5,7 @@ namespace MyProject\Controllers;
 use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Exceptions\NotFoundException;
 use MyProject\Exceptions\UnauthorizedException;
+use MyProject\Exceptions\ForbiddenException;
 use MyProject\Models\Articles\Article;
 use MyProject\Models\Users\User;
 // неймспейс для модели User
@@ -88,6 +89,12 @@ class ArticlesController extends AbstractController
         if ($this->user === null) {
             throw new UnauthorizedException();
         }
+
+//        проверка юзера на admin
+        if (!$this->user->isAdmin()) {
+            throw new ForbiddenException('Для добавления статьи нужно обладать правами admina');
+        }
+
 
         if (!empty($_POST)) {
             try {
