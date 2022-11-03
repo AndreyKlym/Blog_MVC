@@ -4,7 +4,6 @@ namespace MyProject\Controllers;
 
 use MyProject\Models\Users\User;
 use MyProject\Models\Users\UsersAuthService;
-use MyProject\Exceptions\UnauthorizedException;
 use MyProject\View\View;
 
 abstract class AbstractController
