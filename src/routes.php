@@ -9,8 +9,10 @@ return [
     // Пусть наши статьи будут открываться по адресу типа: 
     // http://myproject.loc/articles/1, где вместо 1 может быть любой другой id статьи.
     '~^articles/(\d+)$~' => [\MyProject\Controllers\ArticlesController::class, 'view'],
+
     // отдельный роут для изменения статей
     '~^articles/(\d+)/edit$~' => [\MyProject\Controllers\ArticlesController::class, 'edit'],
+
     // отдельный роут для удаления статей
     '~^articles/(\d+)/delete$~' => [\MyProject\Controllers\ArticlesController::class, 'delete'],
 

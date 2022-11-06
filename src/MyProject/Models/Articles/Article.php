@@ -14,7 +14,7 @@ class Article extends ActiveRecordEntity
     /** @var string */
     protected $text;
 
-    /** @var string */
+    /** @var int */
     protected $authorId;
 
     /** @var string */
@@ -121,5 +121,25 @@ class Article extends ActiveRecordEntity
 
         return $article;
     }
-        
+
+//      обновляем данными из POST-запроса
+    public function updateFromArray(array $fields): Article
+    {
+        if(empty($fields['name'])) {
+            throw new InvalidArgumentException('Не передано новое название статьи');
+//            throw new \http\Exception\InvalidArgumentException('Не передано новое название статьи');
+        }
+        if(empty($fields['text'])) {
+            throw new InvalidArgumentException('Не передано новый текст статьи');
+//            throw new \http\Exception\InvalidArgumentException('Не передано новый текст статьи');
+        }
+
+            $this->setName($fields['name']);
+            $this->setText($fields['text']);
+
+            $this->save();
+
+            return $this;
+    }
+
 }

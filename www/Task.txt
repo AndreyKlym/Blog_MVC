@@ -27,6 +27,9 @@ https://php.zone/oop-v-php-prodvinutyj-kurs/kak-sdelat-avtorizaciyu-na-sayte-na-
 Add posts to blog PHP
 https://php.zone/oop-v-php-prodvinutyj-kurs/sozdanie-zapisey-v-bloge-na-php
 
+Edit posts in the blog PHP
+https://php.zone/oop-v-php-prodvinutyj-kurs/redaktirovanie-statey-na-sayte-na-php
+
 
 
 ?????????????

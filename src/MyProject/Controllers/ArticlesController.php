@@ -16,7 +16,7 @@ use MyProject\Models\Users\UsersAuthService;
 class ArticlesController extends AbstractController
 //class ArticlesController
 {
-
+    public function view(int $articleId): void
     //    // !!!!!!!   перенесли в AbstractController
     //    /** @var View */
     //    private $view;
@@ -32,7 +32,7 @@ class ArticlesController extends AbstractController
 //            $this->view->setVar('user', $this->user);
 //        }
 
-    public function view(int $articleId)
+
     {
         $article = Article::getById($articleId);
 
@@ -46,7 +46,6 @@ class ArticlesController extends AbstractController
         ]);
     }
 
-
     public function edit(int $articleId)
     {
         $article = Article::getById($articleId);
@@ -56,16 +55,30 @@ class ArticlesController extends AbstractController
 //            return;
             throw new NotFoundException();
         }
-
-        $article->setName('Новое название статьи');
-        $article->setText('Новый текст статьи');
-
-        $article->save();
+//        $article->setName('Новое название статьи');
+//        $article->setText('Новый текст статьи');
+//
+//        $article->save();
 
         // var_dump($article);
+
+//        статья обновлялась данными из POST-запроса
+        if($this->user === null) {
+            throw new UnauthorizedException();
+        }
+
+        if(!empty($_POST)) {
+            try{
+                $article->updateFromArray($_POST);
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('articles/edit.php', ['error' =>$e->getMessage(), 'article' => $article]);
+                return;
+            }
+            header('Location: /www/articles/' . $article->getId(), true, 302);
+            exit();
+        }
+        $this->view->renderHtml('articles/edit.php', ['article' => $article]);
     }
-
-
 
     public function add(): void
     {
