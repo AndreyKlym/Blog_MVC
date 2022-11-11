@@ -46,7 +46,7 @@ class ArticlesController extends AbstractController
         ]);
     }
 
-    public function edit(int $articleId)
+    public function edit(int $articleId): void
     {
         $article = Article::getById($articleId);
 
@@ -67,6 +67,11 @@ class ArticlesController extends AbstractController
             throw new UnauthorizedException();
         }
 
+        //        проверка юзера на admin
+        if (!$this->user->isAdmin()) {
+            throw new ForbiddenException('Для редактирования статьи нужно обладать правами admina');
+        }
+
         if(!empty($_POST)) {
             try{
                 $article->updateFromArray($_POST);
@@ -79,6 +84,7 @@ class ArticlesController extends AbstractController
         }
         $this->view->renderHtml('articles/edit.php', ['article' => $article]);
     }
+
 
     public function add(): void
     {

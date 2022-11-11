@@ -3,7 +3,7 @@
 namespace MyProject\Models\Users;
 
 use MyProject\Models\ActiveRecordEntity;
-use MyProject\Models\UsersAuthService;
+use MyProject\Models\Users\UsersAuthService;
 use MyProject\Exceptions\InvalidArgumentException;
 
 class User extends ActiveRecordEntity   
