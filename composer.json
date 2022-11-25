@@ -1,0 +1,19 @@
+{
+    "name": "user/blog_mvc",
+    "type": "project",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Andron Klym",
+            "email": "a311@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "MyProject\\": "src/MyProject/"
+        }
+    },
+    "require": {
+        "erusev/parsedown": "^1.7"
+    }
+}

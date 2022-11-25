@@ -5,6 +5,8 @@ namespace MyProject\Models\Articles;
 use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
+//use Vendor\Erusev\Parsedown\;
+
 
 class Article extends ActiveRecordEntity
 {
@@ -140,6 +142,12 @@ class Article extends ActiveRecordEntity
             $this->save();
 
             return $this;
+    }
+
+    public function getParsedText(): string
+    {
+        $parser = new \Parsedown();
+        return $parser->text($this->getText());
     }
 
 }
