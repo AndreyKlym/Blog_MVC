@@ -23,4 +23,13 @@ abstract class AbstractController
 
     }
 
+    //    вынесем функционал чтения входных данных в абстрактный контроллер:
+    protected function getInputData()
+    {
+        return json_decode(
+            file_get_contents('php://input'),
+            true
+        );
+    }
+
 }

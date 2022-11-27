@@ -4,7 +4,8 @@ namespace MyProject\Models;
 
 use MyProject\Services\Db;
 
-abstract class ActiveRecordEntity
+//abstract class ActiveRecordEntity
+abstract class ActiveRecordEntity implements \JsonSerializable
 {
 
     // добавили protected-свойство ->id и public-геттер для него – у всех наших сущностей будет id,
@@ -206,6 +207,11 @@ abstract class ActiveRecordEntity
             return null;
         }
         return $result[0];
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->mapPropertiesToDbFormat();
     }
 
 }
